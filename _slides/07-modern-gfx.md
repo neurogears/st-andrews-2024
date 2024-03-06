@@ -41,6 +41,21 @@ permalink: /slides/gfx/
 
 ---
 
+<!-- .element: data-transition="default none" -->
+#### What is a shader?
+
+A program that runs directly on the graphics hardware to transform input data to screen pixels.
+
+--
+
+* Vertex: transforms the positions of vertices, e.g. for clip-space transformation
+
+* Geometry: operates on primitives (lines, triangles) and outputs 0 or more primitives e.g. for level-of-detail transformations
+
+* Fragment: operates on rasterized pixels and outputs a color, e.g. for lighting and other color transformation
+
+---
+
 #### OpenGL
 
 <!-- .element: data-transition="default none" -->
@@ -50,7 +65,7 @@ permalink: /slides/gfx/
 
     * Low-level definition of the graphics pipeline
 
-    * Allocation of resources to the GPU like shaders, materials etc.
+    * Allocation of data and resources to the GPU like shaders, materials etc.
 
 * Powerful, flexible but...
 
