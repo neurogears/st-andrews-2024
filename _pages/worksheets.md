@@ -16,3 +16,10 @@ permalink: /worksheets/
 {% for worksheet in optional-worksheets %}
 [{{ worksheet.title }}]({{ worksheet.url | prepend: site.docsurl }})
 {% endfor %}
+
+## Local
+
+{% assign local-worksheets = site.worksheets | where: "local","true" %}
+{% for worksheet in local-worksheets %}
+[{{ worksheet.title }}]({{ worksheet.url | prepend: site.baseurl }})
+{% endfor %}
