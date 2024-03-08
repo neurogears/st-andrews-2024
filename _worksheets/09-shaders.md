@@ -84,9 +84,104 @@ void main() {
 }
 ```
 
+**Note:** a `uniform` is another type of shader variable declaration similar to `in` and `out`. A `uniform` variable has the distinction that it [remains constant across invocation of all shader stages](https://www.khronos.org/opengl/wiki/Uniform_(GLSL)), while `in` and `out` may vary at different shader stages.
+{: .notice--info}
+
 ![Dynamic uniform update]({{ site.baseurl }}/assets/images/shaders-mouse-uniform.svg)
 
 * In a new branch add a `MouseMove` source.
 * Insert `NormalizedDeviceCoordinates` to normalize mouse position relative to the display window size, and expose the `X` coordinate output.
 * Insert `Rescale` to remap the X coordinate between 0 and 1 (Max: 1, Min: -1, RangeMax: 1, RangeMin: 0).
 * Insert an `UpdateUniform` with `ShaderName` as `posColor` and `UniformName` as `dVal`
+
+### **Exercise 5:** Audio visualizer
+
+* Create a new shader file `fractalPyramid.frag`:
+
+```
+#version 400
+in vec2 texCoord;
+out vec4 fragColor;
+
+uniform float iTime;
+uniform vec2 offset = vec2(0.5, 0.5);
+uniform float SCALE = 100;
+uniform float mod = 1.0;
+
+vec3 palette(float d){
+	return mix(vec3(0.2,0.7,0.9),vec3(1.,0.,1.),d);
+}
+
+vec2 rotate(vec2 p,float a){
+	float c = cos(a);
+    float s = sin(a);
+    return p*mat2(c,s,-s,c);
+}
+
+float map(vec3 p){
+    for( int i = 0; i<8; ++i){
+        float t = iTime*0.2;
+        p.xz =rotate(p.xz,t);
+        p.xy =rotate(p.xy,t*1.89);
+        p.xz = abs(p.xz);
+        p.xz-=.5;
+	}
+	return dot(sign(p),p)/5.;
+}
+
+vec4 rm (vec3 ro, vec3 rd){
+    float t = 0.;
+    vec3 col = vec3(0.);
+    float d;
+    for(float i =0.; i<64.; i++){
+		vec3 p = ro + rd*t;
+        d = map(p)*.5;
+        if(d<0.02){
+            break;
+        }
+        if(d>100.){
+        	break;
+        }
+        //col+=vec3(0.6,0.8,0.8)/(400.*(d));
+        col+=palette(length(p)*.1)/(400.*(d));
+        t+=d;
+    }
+    return vec4(col,1./(d*100.));
+}
+
+void main() {
+    vec2 uv = (texCoord - offset) * SCALE * (1.0/mod);
+    vec3 ro = vec3(0.,0.,-50.);
+    ro.xz = rotate(ro.xz,iTime);
+
+    vec3 cf = normalize(-ro);
+    vec3 cs = normalize(cross(cf,vec3(0.,1.,0.)));
+    vec3 cu = normalize(cross(cf,cs));
+
+    vec3 uuv = ro+cf*3. + uv.x*cs + uv.y*cu;
+    
+    vec3 rd = normalize(uuv-ro);
+    
+    vec4 col = rm(ro,rd);
+
+    fragColor = col;
+}
+
+//Adapted from https://www.shadertoy.com/view/tsXBzS
+```
+
+![Time step initialisation]({{ site.baseurl }}/assets/images/shaders-audio-setup.svg)
+
+* Set up a display window and resource loading as before.
+* Create a new material in the `ShaderResources`. Use `fractalPyramid.frag` as the `FragmentShader` and use the same vertex shader as before `BonVision:Shaders.Quad.vert`.
+* Expose the `TimeStep.ElapsedTime` property from `RenderFrame` and use `Accumulate` to accumulate the value.
+* Convert the data type of the `Accumulate` output with an `ExpressionTransform`
+  * `Convert.ToSingle(it)`
+* Use the output of `ExpressionTransform` to `UpdateUniform` of the `iTime` uniform in the `fractalPyramid` shader.
+* Can you explain what the purpose of this uniform value is?
+
+![Audio visualizer]({{ site.baseurl }}/assets/images/shaders-audio-viz.svg)
+
+* TODO explain 2nd step
+
+### **Exercise 6:** Camera texture shader
