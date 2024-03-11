@@ -94,9 +94,44 @@ void main() {
 * Insert `Rescale` to remap the X coordinate between 0 and 1 (Max: 1, Min: -1, RangeMax: 1, RangeMin: 0).
 * Insert an `UpdateUniform` with `ShaderName` as `posColor` and `UniformName` as `dVal`
 
-### **Exercise 5:** Audio visualizer
+### **Exercise 5:** Working with time
+
+Aside from spatial information, we may also want our shader to be dynamic in time.
+
+* Update the `posColor.frag` shader to file to include a new `uniform float` to represent time.
+* Change the `fragColor` output to vary with time in one of the color channels:
+
+```
+#version 400
+uniform double dVal;
+uniform float time;
+in vec2 texCoord;
+out vec4 fragColor;
+
+void main() {
+    fragColor = vec4(texCoord.x, sin(time), dVal, 1.0);
+}
+```
+
+![Dynamic time update]({{ site.baseurl }}/assets/images/shaders-time-input.svg)
+
+* Update the Bonsai workflow to `Accumulate` the elapsed time of `RenderFrame`. What does this accumulation represent?
+* Convert the output to a float with `ExpressionTransform`.
+* Use the result to update the `time` property of the shader with `UpdateUniform`
+
+You should now have a fragment shader that adjusts its color with:
+1. Spatial position of the pixel on screen
+2. Time since the start of display
+3. User input
+
+* Optional: experiment with using other [GLSL core functions](https://registry.khronos.org/OpenGL-Refpages/gl4/index.php) to produce different shader behaviors based on this input data.
+
+### **Exercise 6:** Audio visualizer
 
 * Create a new shader file `fractalPyramid.frag`:
+
+**Note:** This exercise uses a shader adapted from an [existing ShaderToy example](https://www.shadertoy.com/view/tsXBzS). You can optionally use a different shader from this site and adapt it yourself.
+  {: .notice--info}
 
 ```
 #version 400
@@ -178,10 +213,9 @@ void main() {
 * Convert the data type of the `Accumulate` output with an `ExpressionTransform`
   * `Convert.ToSingle(it)`
 * Use the output of `ExpressionTransform` to `UpdateUniform` of the `iTime` uniform in the `fractalPyramid` shader.
-* Can you explain what the purpose of this uniform value is?
 
 ![Audio visualizer]({{ site.baseurl }}/assets/images/shaders-audio-viz.svg)
 
 * TODO explain 2nd step
 
-### **Exercise 6:** Camera texture shader
+### **Exercise 7:** Camera texture shader
