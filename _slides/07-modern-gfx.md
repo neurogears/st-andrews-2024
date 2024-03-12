@@ -34,9 +34,42 @@ permalink: /slides/gfx/
 
 #### A brief history of computer graphics
 
----
+</script>
+</section>
+
+<section data-background="#000000">
+    <section data-background-iframe="https://www.youtube.com/embed/6PG2mdU_i8k?controls=0&amp;enablejsapi=1&amp;autoplay=1&amp;loop=1&amp;showinfo=0&amp;rel=0&amp;html5=1">
+      <table style="height: 20%; margin-top: 65%; margin-left: -78px;">
+        <tr><th>Beam steering - Tennis for Two, 1958</th></tr>
+      </table>
+    </section>
+    <section data-background-iframe="https://www.youtube.com/embed/LhTTpV5qFrs?t=289&amp;controls=0&amp;enablejsapi=1&amp;autoplay=1&amp;loop=1&amp;showinfo=0&amp;rel=0&amp;html5=1">
+      <table style="height: 20%; margin-top: 65%; margin-left: -78px;">
+        <tr><th>Software rendering - Elite, BBC Micro, 1985</th></tr>
+      </table>
+    </section>
+    <section data-background-iframe="https://www.youtube.com/embed/MnqLJpgq7jc?controls=0&amp;enablejsapi=1&amp;autoplay=1&amp;loop=1&amp;showinfo=0&amp;rel=0&amp;html5=1">
+      <table style="height: 20%; margin-top: 65%; margin-left: -78px;">
+        <tr><th>Pushing software rendering - DOOM, 1993</th></tr>
+      </table>
+    </section>
+    <section data-background-iframe="https://www.youtube.com/embed/AdTxrggo8e8?controls=0&amp;enablejsapi=1&amp;autoplay=1&amp;loop=1&amp;showinfo=0&amp;rel=0&amp;html5=1">
+      <table style="height: 20%; margin-top: 65%; margin-left: -78px;">
+        <tr><th>GPU dominance - Raytraced minecraft, 2020</th></tr>
+      </table>
+    </section>
+    <section data-background-iframe="https://www.youtube.com/embed/usBVx4J4CUM?controls=0&amp;enablejsapi=1&amp;autoplay=1&amp;loop=1&amp;showinfo=0&amp;rel=0&amp;html5=1">
+      <table style="height: 20%; margin-top: 65%; margin-left: -78px;">
+        <tr><th>Back to basics? - A Short Hike, 2019</th></tr>
+      </table>
+    </section>
+</section>
+
+<section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+<script type="text/template">
 
 #### The modern graphics pipeline
+
 ![Graphics pipeline](../../assets/images/gfx-pipeline.drawio.svg)
 
 ---
@@ -52,7 +85,7 @@ A program that runs directly on the graphics hardware to transform input data to
 
 * Geometry: operates on primitives (lines, triangles) and outputs 0 or more primitives e.g. for level-of-detail transformations
 
-* Fragment: operates on rasterized pixels and outputs a color, e.g. for lighting and other color transformation
+* Fragment: operates on rasterized pixels and outputs a color, e.g. for lighting and other color transformations
 
 ---
 
@@ -258,6 +291,13 @@ int main(int argc, char** argv)
 ![Triangle](https://media.geeksforgeeks.org/wp-content/uploads/output-283x300.png)
 
 --
+
+---
+
+#### Bonsai.Shaders
+
+* Abstract away some low-level OpenGL boilerplate - window creating, texture binding etc.
+* Allows manipulation of the graphics pipeline directly in Bonsai.
 
 ---
 
