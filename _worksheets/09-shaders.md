@@ -218,4 +218,8 @@ void main() {
 
 * TODO explain 2nd step
 
-### **Exercise 7:** Camera texture shader
+### **Exercise 7:** Using textures
+
+Instead of setting pixel color directly, we can sample from a pre-defined texture.
+
+### **Exercise 8:** Camera textures
