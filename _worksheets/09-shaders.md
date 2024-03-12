@@ -216,7 +216,14 @@ void main() {
 
 ![Audio visualizer]({{ site.baseurl }}/assets/images/shaders-audio-viz.svg)
 
-* TODO explain 2nd step
+* To get an audio feedback value we'll construct a branch that acts as an audio amplitude filter.
+* Create an `AudioCapture` source, then a `Pow` operator with the power set to 2. This will give us an absolute amplitude from the audio buffer.
+* Use `Average` to average the buffer amplitude to a single value, then expose the `Val0` output property.
+* Use another `Pow` to rescale the output (e.g. 0.5) and use a `PublishSubject` called e.g. `AudioLevel`
+* In a different branch, subscribe to `DrawCall` again and `Scale` the plane as before.
+* Use `WithLatestFrom` to pair the outputs with the latest `AudioLevel` value, using an `ExpressionTransform` to convert the type to a float.
+* Use the audio value output of `WithLatestFrom` to update the `mod` property of the `fractalPyramid` shader.
+* The rendered plane should now react to both time and audio level acting as a simple audio visualizer.
 
 ### **Exercise 7:** Using textures
 
