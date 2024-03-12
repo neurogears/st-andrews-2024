@@ -248,6 +248,22 @@ void main() {
 
 ![Texture rendering]({{ site.baseurl }}/assets/images/shaders-texture-workflow.svg)
 
-* To render our texture we need to add another resource operator `TextureResources` in the initialisation branch. Double-click this and add a new `ImageTexture` and give it a Name (e.g. `vertGrat`).
+* To render our texture we need to add another resource operator `TextureResources` in the initialisation branch. Download a texture to use from the [course GitHub](https://github.com/neurogears/st-andrews-2024/tree/gfx-lecture/assets/textures). Double-click `TextureResources` and add a new `ImageTexture` and give it a Name (e.g. `vertGrat`). For the FileName property, use the dialog to select the downloaded texture.
+* Subscribe to `DrawCall` and `Scale` the final `DrawMesh` as before.
+* Add a `BindTexture` operator after `UpdateUniform` and bind your named texture (set in the `TextureName` field) to the `textureShader` shader.
+* You should now see the texture rendered in the display window when the workflow is run.
 
 ### **Exercise 8:** Camera textures
+
+We can also dynamically update the texture that is passed to the shader. We can use this to e.g. manipulate a camera feed.
+
+![Dynamic textures]({{ site.baseurl }}/assets/images/shaders-dynamic-texture.svg)
+
+* Add a new `Texture2D` texture to the `TextureResources` operator and name it something like `DynamicTexture`.
+* Change the `BindTexture` operator to bind to this new texture instead of the image texture.
+* Use a `CameraCapture` and `Flip` operator to produce a camera feed.
+* Connect this to an `UpdateTexture` with `TextureName` set to `DynamicTexture` to update the texture on each new camera image.
+* You should now see the camera feed rendered in the display window.
+
+**Optional:** Now that you have a camera image rendered via a texture and shader, you can take advantage of GPU acceleration to produce interesting image effects. Try and write a new fragment shader to manipulate the camera image, for example combining the image with a 2nd texture or applying a [sobel filter](https://www.shadertoy.com/view/Xdf3Rf) for edge detection.
+  {: .notice--info}
