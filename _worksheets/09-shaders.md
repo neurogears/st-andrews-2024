@@ -227,6 +227,27 @@ void main() {
 
 ### **Exercise 7:** Using textures
 
-Instead of setting pixel color directly, we can sample from a pre-defined texture.
+Instead of setting pixel color programatically, we can sample pixel colors from a pre-defined texture.
+
+* Create a new fragment shader called `textureShader.frag`:
+
+```
+#version 400
+uniform sampler2D tex;
+in vec2 texCoord;
+out vec4 fragColor;
+
+void main() {
+    vec4 texel = texture(tex, texCoord);
+
+    fragColor = texel;
+}
+```
+
+* We are using a new property type [`sampler2D`](https://www.khronos.org/opengl/wiki/Sampler_(GLSL)) to represent our input texture here, as well as another built-in GLSL function [`texture`](https://registry.khronos.org/OpenGL-Refpages/gl4/index.php) to retrieve texels (a.k.a. pixel colors) from our texture
+
+![Texture rendering]({{ site.baseurl }}/assets/images/shaders-texture-workflow.svg)
+
+* To render our texture we need to add another resource operator `TextureResources` in the initialisation branch. Double-click this and add a new `ImageTexture` and give it a Name (e.g. `vertGrat`).
 
 ### **Exercise 8:** Camera textures
