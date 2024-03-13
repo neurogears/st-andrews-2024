@@ -89,6 +89,48 @@ A program that runs directly on the graphics hardware to transform input data to
 
 ---
 
+<!-- .element: data-transition="default none" -->
+#### Space
+
+![Graphics pipeline](../../assets/images/Dolphin_triangle_mesh.png)
+
+--
+
+* Objects to be rendered are represented as vertices, and then faces in 3-dimensions.
+* In the graphics pipeline we need to 'flatten' this data to a 2D position on screen. 
+
+--
+
+#### Space transformation
+
+![Space transformation pipeline](../../assets/images/ShapeSpaceTransformation.png)
+
+--
+
+* Local space: Geometry defined relative to its own origin, e.g. a single cube in 3D modeling software.
+* World space: Many local space objects in a scene need to be defined relative to each other using a global / world origin.
+
+--
+
+* Camera space: The vertices that we want to see on screen are determined by our camera / viewport in the 3D world. We therefore need to know where these vertices are relative to our camera position and orientation.
+
+--
+
+* Clip space: Aside from position and direction, the viewing properties (e.g. field-of-view) of the camera affect which vertices we want to see on screen.
+* Unlike a 'real' camera, we can also decide to exclude vertices that are too close / far from the viewing plane.
+* The projection transform places our vertices into clip-space, so-called because we can decide at this stage which polygons will be on screen, and whether we need to 'clip' anything outside the screen.
+
+--
+
+* Perspective divide: At this stage we may also want to apply perspective mapping, e.g. to make objects further away appear smaller.
+
+--
+
+* Normalised device coordinates: Once these steps have been performed our vertices are in a format which can be rasterized by the graphics hardware.
+* Screen position: Finally we need to transform into a 2D screen space, according to the size and resolution of the viewport window display.
+
+---
+
 #### OpenGL
 
 <!-- .element: data-transition="default none" -->
