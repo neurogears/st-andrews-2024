@@ -34,8 +34,8 @@ This training course will introduce you to the basic concepts of data acquisitio
             <td style="color:cornflowerblue" align="center">Acquisition and Tracking</td>
             <td style="color:cornflowerblue" align="center">Closed-loop experiments</td>
             <td style="color:cornflowerblue" align="center">State Machines</td>
-            <td style="color:cornflowerblue" align="center">Visual environments</td>
-            <td style="color:cornflowerblue" align="center">Final Projects</td>
+            <td style="color:cornflowerblue" align="center">Shaders</td>
+            <td style="color:cornflowerblue" align="center">Visual Environments / Final Projects</td>
         </tr>
     </tbody>
 </table>
