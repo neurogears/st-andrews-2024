@@ -75,11 +75,11 @@ This training course will introduce you to the basic concepts of data acquisitio
 - Introduction to [BonVision](https://bonvision.github.io/){:target="_blank"}
 - Projection mapping and multi-display systems
 
-**Tutorial**: visual environments
+**Tutorial**: Bonsai shaders
 
 ### Day 5 - From shaders to complex visual scenes
 - Integration with external modelling tools
 - Building closed-loop virtual reality experiments
 - Reproducible deployment and versioning of experiments
 
-**Tutorial**: final projects
+**Tutorial**: Visual environments, final projects
