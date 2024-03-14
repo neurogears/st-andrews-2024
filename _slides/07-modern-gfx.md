@@ -330,7 +330,7 @@ int main(int argc, char** argv)
 
 <!-- .element: data-transition="default none" -->
 #### OpenGL
-![Triangle](https://media.geeksforgeeks.org/wp-content/uploads/output-283x300.png)
+![Triangle](../../assets/images/triangle.png)
 
 --
 
