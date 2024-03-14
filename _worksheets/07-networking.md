@@ -2,6 +2,7 @@
 layout: worksheet
 title: Networking
 permalink: /tutorials/networking.html
+optional: "true"
 ---
 
 Bonsai includes support for [Open Sound Control](https://opensoundcontrol.stanford.edu/spec-1_0.html) (OSC), a flexible networking protocol for low-latency communication between different processes, potentially running in different devices over the network. The next exercises will show you how to leverage these primitives for connecting two Bonsai processes exchanging a variety of data. The final optional exercise shows how to leverage the OSC protocol to interface a Python script with a Bonsai workflow.

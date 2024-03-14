@@ -6,8 +6,10 @@ permalink: /worksheets/
 
 {% for worksheet in site.worksheets %}
 {% if worksheet.optional == nil %}
-{% if worksheet.local == nil %}
+{% if worksheet.local != "true" %}
 [{{ worksheet.title }}]({{ worksheet.url | prepend: site.docsurl }})
+{% else %}
+[{{ worksheet.title }}]({{ worksheet.url | prepend: site.baseurl }})
 {% endif %}
 {% endif %}
 {% endfor %}
@@ -17,11 +19,4 @@ permalink: /worksheets/
 {% assign optional-worksheets = site.worksheets | where: "optional","true" %}
 {% for worksheet in optional-worksheets %}
 [{{ worksheet.title }}]({{ worksheet.url | prepend: site.docsurl }})
-{% endfor %}
-
-## Local
-
-{% assign local-worksheets = site.worksheets | where: "local","true" %}
-{% for worksheet in local-worksheets %}
-[{{ worksheet.title }}]({{ worksheet.url | prepend: site.baseurl }})
 {% endfor %}
