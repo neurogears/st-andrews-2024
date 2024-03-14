@@ -5,3 +5,8 @@ _site
 .jekyll-cache
 .jekyll-metadata
 Gemfile.lock
+
+# Bonsai environment
+*.exe
+*.exe.*
+Packages
