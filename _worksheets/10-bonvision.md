@@ -14,3 +14,5 @@ Getting Started
 ### **Exercise 1:** Rendering a 3D model
 
 ![Setting up a model render]({{ site.baseurl }}/assets/images/bonvision2-render-model.svg)
+
+* Create a the display initialisation branch: `CreateWindow` --> `BonVisionResources` --> `MeshResources` --> `LoadResources`.
