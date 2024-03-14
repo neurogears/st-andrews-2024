@@ -117,6 +117,7 @@ void main() {
 
 * Update the Bonsai workflow to `Accumulate` the elapsed time of `RenderFrame`. What does this accumulation represent?
 * Convert the output to a float with `ExpressionTransform`.
+    * `Convert.ToSingle(it)`
 * Use the result to update the `time` property of the shader with `UpdateUniform`
 
 You should now have a fragment shader that adjusts its color with:
@@ -210,7 +211,7 @@ void main() {
 * Set up a display window and resource loading as before.
 * Create a new material in the `ShaderResources`. Use `fractalPyramid.frag` as the `FragmentShader` and use the same vertex shader as before `BonVision:Shaders.Quad.vert`.
 * Expose the `TimeStep.ElapsedTime` property from `RenderFrame` and use `Accumulate` to accumulate the value.
-* Convert the data type of the `Accumulate` output with an `ExpressionTransform`
+* Convert the data type of the `Accumulate` output to a float with an `ExpressionTransform`
   * `Convert.ToSingle(it)`
 * Use the output of `ExpressionTransform` to `UpdateUniform` of the `iTime` uniform in the `fractalPyramid` shader.
 
