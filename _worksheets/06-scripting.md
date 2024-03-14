@@ -2,6 +2,7 @@
 layout: worksheet
 title: Scripting
 permalink: /tutorials/scripting.html
+optional: "true"
 ---
 
 The Bonsai compiler includes advanced scripting functionality to allow developing custom operators specifically for your project. These scripts will be compiled together with your workflow. The Bonsai editor makes it easier to bootstrap the required infrastructure and the scripts themselves.

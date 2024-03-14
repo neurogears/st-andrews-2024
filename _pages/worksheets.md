@@ -6,7 +6,11 @@ permalink: /worksheets/
 
 {% for worksheet in site.worksheets %}
 {% if worksheet.optional == nil %}
+{% if worksheet.local != "true" %}
 [{{ worksheet.title }}]({{ worksheet.url | prepend: site.docsurl }})
+{% else %}
+[{{ worksheet.title }}]({{ worksheet.url | prepend: site.baseurl }})
+{% endif %}
 {% endif %}
 {% endfor %}
 
