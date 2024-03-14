@@ -11,7 +11,7 @@ Getting Started
 1. Install **BonVision** from the package manager, make sure to select **Community Packages** for the package source dropdown. ![The Bonsai package manager]({{ site.baseurl }}/assets/images/packagemanager.png)
 2. This should also install the **Bonsai.Shaders package** as a dependency, check it is installed in the **installed** tab.
 
-### **Exercise 1:** Creating a shader window, loading resources
+### **Exercise 1:** Creating a display window, loading resources
 
 ![Setting up a window]({{ site.baseurl }}/assets/images/shaders-setup.svg)
 
