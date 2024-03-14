@@ -16,3 +16,29 @@ Getting Started
 ![Setting up a model render]({{ site.baseurl }}/assets/images/bonvision2-render-model.svg)
 
 * Create a the display initialisation branch: `CreateWindow` --> `BonVisionResources` --> `MeshResources` --> `LoadResources`.
+* Download a 3D model from the [course repository](https://github.com/neurogears/st-andrews-2024/tree/bv-worksheet/assets/models) e.g. `icosphere.obj`.
+* Double-click `MeshResources` and add the downloaded model as a `TexturedModel`, give it a name like icosphere.
+* In a new branch create a `RenderFrame` source and insert a `PerspectiveView` from BonVision. Publish the output as a `PublishSubject` called `DrawCall`.
+* In a new branch, subscribe to `DrawCall` and insert a `DrawModel` from BonVision. In draw model select the imported 3D model in the `MeshName` property.
+* When you the run the workflow you should see the rendered 3D object.
+* In the workflow so far, what does the output of `PerspectiveView` represent? In which shader and to what property is this output applied? (HINT: Use right-click >> Go to definition... on the BonVision nodes to explore).
+* Try changing the color of the rendered object using the albedo property.
+* Try adjusting the scale, rotation and position of the rendered object.
+* Try adjusting the properties of `PerspectiveView` - how do they affect the rendering of the object?
+* Try adding other models to the rendered scene.
+
+### **Exercise 2:** Animating scene objects
+
+![Animating a model]({{ site.baseurl }}/assets/images/bonvision2-animate-model.svg)
+
+* Externalize the `RotationY` property of `DrawModel` (right-click).
+* Create a `RangeAnimation` operator. Set its duration to 3s, and have it move between 0-359 (`RangeBegin` : `RangeEnd`).
+* Add a `Repeat` to cycle this animation infinitely. 
+* Insert a `DegreeToRadian` from the `Numerics` package and hook the output to the `RotationY` property.
+* The object should now spin on the y-axis.
+* Try and implement other animations. E.g. can you make the object bob up and down? (HINT: Use the `Sin` operator from the `Numerics` package).
+
+### **Exercise 3:** Closed-loop VR
+
+In this exercise, we will build a 3D scene that reacts to a tracked 'real-world' object. By moving the scene view relative to this object we'll turn the monitor into a simple augmented reality window. To begin we'll set up the object tracking.
+
