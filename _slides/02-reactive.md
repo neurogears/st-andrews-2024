@@ -150,6 +150,12 @@ permalink: /slides/reactive/
 
 ---
 
+###### Repeat
+
+![Delay](../../assets/images/repeat.svg)
+
+---
+
 ###### Delay
 
 ![Delay](../../assets/images/delay.svg)
@@ -165,12 +171,6 @@ permalink: /slides/reactive/
 ###### SubscribeWhen
 
 ![SubscribeWhen](../../assets/images/subscribewhen.svg)
-
----
-
-###### Repeat
-
-![Delay](../../assets/images/repeat.svg)
 
 ---
 

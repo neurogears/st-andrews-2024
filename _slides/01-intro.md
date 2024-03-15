@@ -55,39 +55,19 @@ permalink: /slides/intro/
 
 ---
 
-<!-- .element: data-transition="default none" -->
-### Why do we need a new algebra?
-![Behavior Experiments](../../assets/images/behavior-experiments-1.svg)
+#### Why do we need a reactive algebra?
 
---
+![Single DAQ](../../assets/images/nidaq.jpg)
 
-<!-- .element: data-transition="none" -->
-### Why do we need a new algebra?
-![Behavior Experiments](../../assets/images/behavior-experiments-2.svg)
+In a perfect world, all our data would arrive to a single synchronized device.
 
---
+---
 
-<!-- .element: data-transition="none" -->
-### Why do we need a new algebra?
-![Behavior Experiments](../../assets/images/behavior-experiments-3.svg)
+#### Why do we need a reactive algebra?
 
---
+<img src="../../assets/images/devices.jpg" height="450" alt="Devices compatible with Bonsai">
 
-<!-- .element: data-transition="none" -->
-### Why do we need a new algebra?
-![Behavior Experiments](../../assets/images/behavior-experiments-4.svg)
-
---
-
-<!-- .element: data-transition="none" -->
-### Why do we need a new algebra?
-![Behavior Experiments](../../assets/images/behavior-experiments-5c.svg)
-
---
-
-<!-- .element: data-transition="none" -->
-### Why do we need a new algebra?
-![Behavior Experiments](../../assets/images/behavior-experiments-5.svg)
+In reality, we have a mesh of multi-purpose asynchronous devices.
 
 ---
 
@@ -186,7 +166,7 @@ permalink: /slides/intro/
         <tr><th>Lorenza Calcaterra, Kampff Lab</th></tr>
       </table>
     </section>
-    <section data-background-iframe="https://www.youtube.com/embed/hz_OnvH9sa0?controls=0&amp;enablejsapi=1&amp;autoplay=1&amp;loop=1&amp;playlist=hz_OnvH9sa0&amp;showinfo=0&amp;rel=0&amp;html5=1">
+    <section data-background-iframe="https://www.youtube.com/embed/umUuOIxoKEw?controls=0&amp;enablejsapi=1&amp;autoplay=1&amp;loop=1&amp;playlist=umUuOIxoKEw&amp;showinfo=0&amp;rel=0&amp;html5=1">
       <table style="height: 20%; margin-top: 65%; margin-left: -78px;">
         <tr><th>Joana Neto et al., Kampff Lab</th></tr>
       </table>
