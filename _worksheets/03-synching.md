@@ -2,6 +2,7 @@
 layout: worksheet
 title: Data Synchronization
 permalink: /tutorials/synching.html
+local: "true"
 ---
 
 Synchronizing behaviour and other experimental events with stimulation or recorded neural data is a fundamental component of neuroscience data collection and analysis. The exercises below will walk you through some common synchronization problems encountered in systems neuroscience experiments, and how to handle them using Bonsai.
@@ -36,7 +37,7 @@ The task begins with an inter-trial interval (`ITI`), followed by stimulus prese
 
 In this first exercise, you will assemble the basic hardware and software components required to implement the reaction time task. The wiring diagram below illustrates the hardware assembly. You can wire the LED into any digital input pin, but make sure to note the pin number for the steps below.
 
-![Reaction Time Circuit]({{ site.baseurl }}/assets/images/reaction-time-circuit.png){:height="300px"}
+![Reaction Time Circuit]({{ site.baseurl }}/assets/images/reactiontime.png){:height="300px"}
 
 We will start by using a fixed-interval blinking LED as our stimulus.
 
@@ -61,14 +62,16 @@ We will start by using a fixed-interval blinking LED as our stimulus.
 
 ![Reaction Time Measurement]({{ site.baseurl }}/assets/images/reaction-time-measurement.svg)
 
-* Insert an `AnalogInput` source.
-* Set the `Pin` property to the analog pin number where the duplicate LED wire is connected.
-* Insert a second `AnalogInput` source.
-* Set the `Pin` property to the analog pin number where the button is connected.
+* Insert a `DigitalInput` source.
+* Set the `Pin` property to the digital pin number where the duplicate LED wire is connected.
+* Insert a second `DigitalInput` source.
+* Set the `Pin` property to the digital pin number where the button is connected.
 * Connect both inputs to a `Zip` operator.
 * Insert a `CsvWriter` sink and configure the `FileName` property.
 * Insert a `RollingGraph` visualizer and set its `Capacity` property to 1000.
 * Run the workflow, and verify that both the stimulus and the button are correctly recorded.
+* **Optional:** At the moment, the 'off' events of the task are also recorded, how can you limit the events to only the 'on' events (LED on / touch on).
+* Can you modify this workflow to report the reaction time on each trial (i.e. the time difference between the two digital input events)?
 
 ### **Exercise 4:** Synchronizing video with a visual stimulus
 
@@ -109,9 +112,7 @@ To make our task more interesting, we will now trigger the stimulus manually usi
 
 ![Triggered Video Outer]({{ site.baseurl }}/assets/images/triggered-video-outer.svg)
 
-* Starting from the previous workflow, insert another `AnalogInput` source with the `Pin` property set to the button press pin number.
-* Insert a `GreaterThan` operator.
-* Insert a `DistinctUntilChanged` operator.
+* In a new workflow, insert a `DigitalInput` source with the `Pin` property set to the button press pin number.
 * Insert a `Condition` operator.
 * In a new branch coming off the `VideoWriter`, insert a `Delay` operator.
 * Set the `DueTime` property of the `Delay` operator to 1 second.
@@ -121,5 +122,5 @@ To make our task more interesting, we will now trigger the stimulus manually usi
 ![Triggered Video Inner]({{ site.baseurl }}/assets/images/triggered-video-inner.svg)
 
 * Run the workflow and record a few videos triggered on the button press.
-* Inspect the videos frame by frame and check whether the response LED comes ON at exactly the same frame number across different trials.
-* If it does not, why would this happen? And how would you fix it?
+* Can you use an LED output to determine the exact video frame in which the button was pressed?
+* Is this frame number consistent across different triggered videos? If not, why not?
