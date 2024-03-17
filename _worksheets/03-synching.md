@@ -35,7 +35,7 @@ The task begins with an inter-trial interval (`ITI`), followed by stimulus prese
 
 ### **Exercise 2:** Generating a fixed-interval stimulus
 
-In this first exercise, you will assemble the basic hardware and software components required to implement the reaction time task. The wiring diagram below illustrates the hardware assembly. You can wire the LED into any digital input pin, but make sure to note the pin number for the steps below. Note that in the wiring diagram we are using the standard cable to connect the LED to an analog port, while also connecting the digital line to a digital output with a jumper wire.
+In this first exercise, you will assemble the basic hardware and software components required to implement the reaction time task. The wiring diagram below illustrates the hardware assembly. You can wire the LED into any digital input pin, but make sure to note the pin number for the steps below. Note that in the wiring diagram we are using the standard cable to connect the LED to an analog port, while also connecting the digital line of the LED to a digital output with a jumper wire.
 
 ![Reaction Time Circuit]({{ site.baseurl }}/assets/images/reaction-time-circuit.png){:height="300px"}
 
