@@ -43,5 +43,20 @@ permalink: /slides/welcome/
 
 ![Course team](../../assets/images/course-team.png)
 
+---
+
+### Questions?
+[neurogears.org/st-andrews-2024](https://neurogears.org/st-andrews-2024)
+<table style="width: 100%;">
+  <tr>
+    <th style="vertical-align: middle; width: 50%; height: 100px; padding-left: 100px">
+      <img alt="NeuroGEARS" src="../../assets/images/neurogears.svg"/>
+    </th>
+    <th style="vertical-align: middle; width: 40%; height: 170px; align: right">
+      <img alt="St-Andrews" src="../../assets/images/st-andrews.png"/>
+    </th>
+  </tr>
+</table>
+
 </script>
 </section>
