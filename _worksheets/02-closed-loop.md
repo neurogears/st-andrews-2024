@@ -2,6 +2,7 @@
 layout: worksheet
 title: Closed-Loop Systems
 permalink: /tutorials/closed-loop.html
+local: "true"
 ---
 
 In a closed-loop experiment, we want the behaviour data to generate feedback in real-time into the external world, establishing a relationship where the output of the system depends on detected sensory input. Many behavioural experiments in neuroscience require some kind of closed-loop interaction between the subject and the experimental setup. The exercises below will show you how to use the online data processing capabilities of Bonsai to create and benchmark many different kinds of closed-loop systems.
@@ -179,51 +180,3 @@ We now want to map our negative centroid to the `Translation` property of `Affin
 * Run the workflow, and verify the output of `WarpAffine` is now a video which is always centred on the tracked object.
 * **Optional**: Insert a `Crop` transform after `WarpAffine` to select a bounded region around the object.
 * **Optional**: Modify the object tracking workflow to use `FindContours` and `BinaryRegionAnalysis`.
-  
-### **Exercise 7:** Make a robotic camera follow a tracked object
-
-On this exercise we will use the Pan and Tilt servo motor assembly to make the camera itself always point to the tracked object. The goal will be to keep the object always in the centre of the visual field of the camera. If the object is to the left of the centre, we turn the camera left, if it is to the right, we need to turn the camera right.
-
-![Computing the deviation from the image centre]({{ site.baseurl }}/assets/images/closed-loop-pantilt-error.svg)
-  
-* Insert a `CameraCapture` source.  
-* Insert nodes to complete a video tracking workflow using `ConvertColor`, `HsvThreshold`, and the `Centroid` operator.
-* Run the workflow and calibrate the threshold to make sure the colored object is perfectly segmented.
-
-To make the Pan and Tilt servo motors correct the position of the camera, we now need to transform the X and Y values of the centroid, which are in image coordinates, to servo motor commands in degrees. For each frame we will have an incremental error depending on the observed location of the object, i.e. the deviation from the image centre.
-
-* Right-click the `Centroid` and select `Output` > `X`.
-* Insert a `Rescale` transform and set the `Max` property to 640 (the image width), and the `RangeMin` and `RangeMax` properties to 1 and -1, respectively.
-
-The output of this workflow will be a relative error signal indicating how much from the centre, and in which direction, the motor should turn. However, the commands to the servo are absolute motor positions in degrees. This means we will need to integrate the relative error signals to get the actual position where the servo should be. We also need to be aware of the servo operational range (0 to 180 degrees) in order not to damage the motors. To accomplish this, we will develop a new operator to compute the error-corrected integration before sending the final command to the servos. 
-
-![Computing the servo commands]({{ site.baseurl }}/assets/images/closed-loop-pantilt-servo.svg)
-
-* Insert a `PythonTransform` operator after `Rescale`. Change the `Script` property to the following code:
-
-```python
-position = 90.0
-
-@returns(float)
-def process(value):
-  global position
-  temp = position + value
-
-  # update the position only when the angle range is valid
-  if (20.0 < temp and temp < 160):
-     position = temp
-  return position
-```
-* Insert a `ServoOutput` sink.
-* Set the `Pin` property to the Arduino pin where the horizontal Pan motor is connected.
-* Configure the `PortName` to the Arduino port where the micro-controller is connected.
-* Run the workflow and validate the horizontal position of the motor is adjusted to keep the object in the middle.
-
-![Rescale Coordinates]({{ site.baseurl }}/assets/images/closed-loop-pantilt-tracking.svg)
-
-* Right-click the `Centroid` and select `Output` > `Y` to create a new branch for the vertical Tilt motor.
-* Insert a `Rescale` transform and set the `Max` property to 480 (the image height), and the `RangeMin` and `RangeMax` properties to -1 and 1, respectively (note these values are swapped from before because in image coordinates zero is at the image top).
-* Copy and paste the `PythonTransform` script from the previous branch.
-* Insert a `ServoOutput` sink and set the `Pin` property to the Arduino pin where the vertical Tilt motor is connected.
-* Configure the `PortName` property.
-* Run the workflow and validate the camera is tracking the object and keeping it in the centre of the image.
