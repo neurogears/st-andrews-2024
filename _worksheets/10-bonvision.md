@@ -38,7 +38,38 @@ Getting Started
 * The object should now spin on the y-axis.
 * Try and implement other animations. E.g. can you make the object bob up and down? (HINT: Use the `Sin` operator from the `Numerics` package).
 
-### **Exercise 3:** Closed-loop VR
+### **Exercise 3:** Benchmarking screen round-trip latency
+
+In a previous worksheet (closed-loop) we measure the closed-loop latency of our Arduino serial port with a digital-feedback test.
+Here we will adapt this method to estimate the closed-loop latency of our display system.
+
+![Init closed loop]({{ site.baseurl }}/assets/images/bonvision-closedloop-init.svg)
+
+* Insert a `CreateWindow`, `BonVisionResources`, `LoadResources` in a branch.
+* In a new branch create a `BehaviorSubject` to store a color value (call it something like `CurColor`), initialised with `CreateVector4` with all properties as 1 to start with a white color.
+
+![Init closed loop]({{ site.baseurl }}/assets/images/bonvision-closedloop-renderpath.svg)
+
+* In a separate branch add a `RenderFrame`.
+* We only need a 2D environment for this benchmark so we'll insert a `NormalizedView`.
+* Every render call, we want to draw a 2D plane with the most recent set color. Use a `WithLatestFrom` that has a subscription to `CurColor` as the 2nd input.
+* Can you explain why we use a `BehaviorSubject` in this context?
+* Output the color item from `WithLatestFrom` and use it to update color property of the `Color` shader with `UpdateUniform`.
+* Finally, insert `DrawMesh` with the `Plane` mesh and `Color` shader.
+
+![Closing the loop]({{ site.baseurl }}/assets/images/bonvision-closedloop-closingloop.svg)
+
+To close the loop, we want to use a photodetector (in this case the analog grayscale sensor) to switch the current color to a contrasting color whenever it detects a change: e.g. detect white --> change to black --> detect black --> change to white ...
+
+* Shown above is a partially completed part of the workflow to achieve this. 
+* `AnalogInput` is used to sample an analog port with a grayscale sensor connected.
+* `LessThan` and `DistinctUntilChanged` are used to produce boolean events whenever the light level crosses a particular threshold.
+* Complete this part of the workflow to produce a feedback switching behavior (HINT: refer back to Ex. 1 of the closed loop worksheet).
+* Once this is working, how can you extend/modify this workflow to estimate the closed-loop latency?
+
+* **Optional:** Can you create a workflow that measures and estimates input latency? Input latency is the time from a user-input (e.g. key press, button push) until a change appears on screen in response (e.g. color change).
+
+### **Exercise 4:** Closed-loop VR
 
 In this exercise, we will build a 3D scene that reacts to a tracked 'real-world' object. By moving the scene view relative to this object we'll turn the monitor into a simple augmented reality window. To begin we'll set up the object tracking.
 
