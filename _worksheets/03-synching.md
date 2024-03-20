@@ -2,6 +2,7 @@
 layout: worksheet
 title: Data Synchronization
 permalink: /tutorials/synching.html
+local: "true"
 ---
 
 Synchronizing behaviour and other experimental events with stimulation or recorded neural data is a fundamental component of neuroscience data collection and analysis. The exercises below will walk you through some common synchronization problems encountered in systems neuroscience experiments, and how to handle them using Bonsai.
@@ -34,7 +35,7 @@ The task begins with an inter-trial interval (`ITI`), followed by stimulus prese
 
 ### **Exercise 2:** Generating a fixed-interval stimulus
 
-In this first exercise, you will assemble the basic hardware and software components required to implement the reaction time task. The wiring diagram below illustrates the hardware assembly. You can wire the LED into any digital input pin, but make sure to note the pin number for the steps below.
+In this first exercise, you will assemble the basic hardware and software components required to implement the reaction time task. The wiring diagram below illustrates the hardware assembly. You can wire the LED into any digital input pin, but make sure to note the pin number for the steps below. Note that in the wiring diagram we are using the standard cable to connect the LED to an analog port, while also connecting the digital line of the LED to a digital output with a jumper wire.
 
 ![Reaction Time Circuit]({{ site.baseurl }}/assets/images/reaction-time-circuit.png){:height="300px"}
 
@@ -88,14 +89,11 @@ To analyze movement dynamics in the reaction time task, you will need to align i
 
 ### **Exercise 5:** Trigger a visual stimulus using a button
 
-To make our task more interesting, we will now trigger the stimulus manually using a button press and learn more about `SelectMany` along the way!
+To make our task more interesting, we will now trigger the stimulus manually using a key press and learn more about `SelectMany` along the way!
 
 ![Triggered Stimulus Outer]({{ site.baseurl }}/assets/images/triggered-stimulus-outer.svg)
 
-* Connect a new push button component into one of the Arduino digital inputs.
-* Insert a `DigitalInput` source and set its `Pin` property to the Arduino pin where the new button is connected.
-* Configure the `PortName` to the Arduino port where the microcontroller is connected.
-* Insert a `Condition` operator.
+* Insert a `KeyDown` source and set its `Filter` property to a keyboard key of choice.
 * Insert a `SelectMany` operator and move the stimulus generation logic inside the nested node:
 
 ![Triggered Stimulus Inner]({{ site.baseurl }}/assets/images/triggered-stimulus-inner.svg)
@@ -103,7 +101,7 @@ To make our task more interesting, we will now trigger the stimulus manually usi
 *Why do we need to remove the `Repeat` operator?*
 
 * Ask a friend to test your reaction time!
-* **Optional:** In the current workflow, what happens if you press the stimulus button twice in succession? Can you fix the current behaviour by using one of the higher order operators?
+* **Optional:** In the current workflow, what happens if you press the stimulus key twice in succession? Can you fix the current behaviour by using one of the higher order operators?
 
 ### **Exercise 6:** Recording response-triggered videos
 
