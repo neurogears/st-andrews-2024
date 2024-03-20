@@ -73,3 +73,58 @@ To close the loop, we want to use a photodetector (in this case the analog grays
 
 In this exercise, we will build a 3D scene that reacts to a tracked 'real-world' object. By moving the scene view relative to this object we'll turn the monitor into a simple augmented reality window. To begin we'll set up the object tracking.
 
+![VR tracking]({{ site.baseurl }}/assets/images/bonvision-closedvr-tracking.svg)
+
+* For this task, we want to be able to track an object in 3 dimensions:
+  * X: Horizontal movement (i.e. left to right)
+  * Y: Vertical movement (i.e. up and down)
+  * Z: Forward movement (i.e. closed and further from the camera / screen)
+* A convenient way to track the Z-axis is to have a tracked object with two same-colored markers at a fixed distance from each other. During tracking we can use the pixel-distance between these two markers as a proxy for distance.
+  * In the camera view, as the object approaches the camera, the two markers will have a greater pixel distance between them.
+* Set up a color tracking workflow that includes `BinaryRegionAnalysis` to track the object markers.
+* Insert a `Condition` that filters the stream to include only events when both markers are present.
+* Branch from the `Condition` and create 3 `PythonTransform` operators to calculate:
+  * Z-axis (distance from camera)
+  * X-axis (lateral position relative to camera)
+  * Y-axis (vertical position relative to camera)
+* Use `Rescale` to remap the outputs of these calculations. We want to convert pixel space to 'physical' distance in the 3D environment.
+  * For example in the X-axis, if the camera image is 640 pixels wide, we would want to map 0:640 pixels to e.g. -2:2.
+* Use `CombineLatest` to pack the rescaled outputs together.
+* Use `ExpressionTransform` to convert the `Tuple` output to a dynamic class with named properties:
+
+```
+new (
+  it.Item1 as Distance,
+  it.Item2 as Lateral,
+  it.Item3 as Vertical
+)
+```
+* Use a `PublishSubject` called `Tracking` to publish this class.
+
+![Visual environment]({{ site.baseurl }}/assets/images/bonvision-closedloop-visenz.svg)
+
+* Set up the 3D visual environment.
+* For `MeshResources` you can download 3D models from the [course repository](https://github.com/neurogears/st-andrews-2024/tree/bv-worksheet/assets/models).
+* Double-click on `MeshResources` and add some downloaded models (Add >> TexturedModel).
+* In a separate branch create a `RenderFrame` followed by a `PerspectiveView`. Create a `PublishSubject` to publish the `PerspectiveView` data (ViewMatrix, PerspectiveMatrix).
+* In a separate branch (or multiple separate branches) use the `DrawModel` operator to populate the 3D scene. Use the `MeshName` property to select a model from `MeshResources`. 
+* Experiment with the properties of each `DrawModel` operator to modify the position and appearance of objects in the scene.
+* Experiment with using externalized properties of the `DrawModel` operators to dynamically modify these properties.
+
+![Visual environment]({{ site.baseurl }}/assets/images/bonvision-closedloop-eyetransform.svg)
+
+* Subscribe to the `Tracking` subject and use it to populate a `CreateVector3`.
+  * Use an `InputMapping` to populate the vector, try and determine which tracked axes correspond to X, Y, Z of this translation vector.
+* Externalize the `Eye` property of `PerspectiveView` which defines 'camera' position in the scene and connect the `CreateVector3`.
+* Run the workflow and observe the results in the display window.
+
+### **Challenge (optional):** Endless runner
+
+* Create an 'endless runner' style game in Bonsai.
+
+Example specs:
+* Player constantly moves forward through space, can adjust lateral movement via camera object tracking.
+* Obstacles spawn at random at some distance from the player and get closer as player moves forward, these objects must be avoided (or navigated towards e.g. score pickups).
+  * How can you detect 'collisions'? Determining whether the player has interacted with or avoided an object.
+* Player accumulates score over time (can you display this score on the display window?).
+* If the player collides with an obstacle, the game resets.
