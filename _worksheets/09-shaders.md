@@ -249,7 +249,7 @@ void main() {
 
 ![Texture rendering]({{ site.baseurl }}/assets/images/shaders-texture-workflow.svg)
 
-* To render our texture we need to add another resource operator `TextureResources` in the initialisation branch. Download a texture to use from the [course GitHub](https://github.com/neurogears/st-andrews-2024/tree/gfx-lecture/assets/textures). Double-click `TextureResources` and add a new `ImageTexture` and give it a Name (e.g. `vertGrat`). For the FileName property, use the dialog to select the downloaded texture.
+* To render our texture we need to add another resource operator `TextureResources` in the initialisation branch. Download a texture to use from the [course GitHub](https://github.com/neurogears/st-andrews-2024/tree/main/assets/textures). Double-click `TextureResources` and add a new `ImageTexture` and give it a Name (e.g. `vertGrat`). For the FileName property, use the dialog to select the downloaded texture.
 * Subscribe to `DrawCall` and `Scale` the final `DrawMesh` as before.
 * Add a `BindTexture` operator after `UpdateUniform` and bind your named texture (set in the `TextureName` field) to the `textureShader` shader.
 * You should now see the texture rendered in the display window when the workflow is run.
