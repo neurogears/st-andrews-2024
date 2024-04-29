@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.8.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
+                 xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:ipy="clr-namespace:Bonsai.Scripting.IronPython;assembly=Bonsai.Scripting.IronPython"
+                 xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="gl:CreateWindow">
+          <gl:Width>640</gl:Width>
+          <gl:Height>480</gl:Height>
+          <gl:VSync>On</gl:VSync>
+          <gl:SwapSync>false</gl:SwapSync>
+          <gl:ClearColor>DimGray</gl:ClearColor>
+          <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
+          <gl:CursorVisible>true</gl:CursorVisible>
+          <gl:Location xsi:nil="true" />
+          <gl:WindowBorder>Resizable</gl:WindowBorder>
+          <gl:WindowState>Normal</gl:WindowState>
+          <gl:DisplayDevice>Primary</gl:DisplayDevice>
+          <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
+          <gl:TargetUpdateFrequency xsi:nil="true" />
+          <gl:RenderState />
+          <gl:GraphicsMode>
+            <gl:ColorFormat>
+              <gl:Red>8</gl:Red>
+              <gl:Green>8</gl:Green>
+              <gl:Blue>8</gl:Blue>
+              <gl:Alpha>8</gl:Alpha>
+            </gl:ColorFormat>
+            <gl:Depth>16</gl:Depth>
+            <gl:Stencil>0</gl:Stencil>
+            <gl:Samples>0</gl:Samples>
+            <gl:AccumulatorFormat>
+              <gl:Red>0</gl:Red>
+              <gl:Green>0</gl:Green>
+              <gl:Blue>0</gl:Blue>
+              <gl:Alpha>0</gl:Alpha>
+            </gl:AccumulatorFormat>
+            <gl:Buffers>2</gl:Buffers>
+            <gl:Stereo>false</gl:Stereo>
+          </gl:GraphicsMode>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.BonVisionResources.bonsai" />
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="gl:MeshResources">
+          <gl:Meshes>
+            <gl:MeshConfiguration xsi:type="gl:TexturedModel">
+              <gl:Name>cone</gl:Name>
+              <gl:FileName>Models\cone.obj</gl:FileName>
+            </gl:MeshConfiguration>
+            <gl:MeshConfiguration xsi:type="gl:TexturedModel">
+              <gl:Name>cube</gl:Name>
+              <gl:FileName>Models\cube.obj</gl:FileName>
+            </gl:MeshConfiguration>
+            <gl:MeshConfiguration xsi:type="gl:TexturedModel">
+              <gl:Name>cylinder</gl:Name>
+              <gl:FileName>Models\cylinder.obj</gl:FileName>
+            </gl:MeshConfiguration>
+            <gl:MeshConfiguration xsi:type="gl:TexturedModel">
+              <gl:Name>icosphere</gl:Name>
+              <gl:FileName>Models\icosphere.obj</gl:FileName>
+            </gl:MeshConfiguration>
+            <gl:MeshConfiguration xsi:type="gl:TexturedModel">
+              <gl:Name>sphere</gl:Name>
+              <gl:FileName>Models\sphere.obj</gl:FileName>
+            </gl:MeshConfiguration>
+            <gl:MeshConfiguration xsi:type="gl:TexturedModel">
+              <gl:Name>suzanne</gl:Name>
+              <gl:FileName>Models\suzanne.obj</gl:FileName>
+            </gl:MeshConfiguration>
+            <gl:MeshConfiguration xsi:type="gl:TexturedModel">
+              <gl:Name>torus</gl:Name>
+              <gl:FileName>Models\torus.obj</gl:FileName>
+            </gl:MeshConfiguration>
+          </gl:Meshes>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="res:LoadResources" />
+      </Expression>
+      <Expression xsi:type="WorkflowOutput" />
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="gl:RenderFrame" />
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Tracking</Name>
+      </Expression>
+      <Expression xsi:type="InputMapping">
+        <PropertyMappings>
+          <Property Name="X" Selector="Lateral" />
+          <Property Name="Z" Selector="Distance" />
+          <Property Name="Y" Selector="Vertical" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="gl:CreateVector3">
+          <gl:X>0.04413738</gl:X>
+          <gl:Y>-0.325020343</gl:Y>
+          <gl:Z>3.460453</gl:Z>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="Eye" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveView.bonsai">
+        <Eye>
+          <X>0.04413738</X>
+          <Y>-0.325020343</Y>
+          <Z>3.460453</Z>
+        </Eye>
+        <Target>
+          <X>0</X>
+          <Y>0</Y>
+          <Z>1</Z>
+        </Target>
+        <Up>
+          <X>0</X>
+          <Y>1</Y>
+          <Z>0</Z>
+        </Up>
+        <FieldOfView>90</FieldOfView>
+        <NearClip>0.1</NearClip>
+        <FarClip>1000</FarClip>
+        <Light>
+          <X>0</X>
+          <Y>1</Y>
+          <Z>1</Z>
+        </Light>
+      </Expression>
+      <Expression xsi:type="rx:PublishSubject">
+        <Name>Draw</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Draw</Name>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.RangeAnimation.bonsai">
+        <Duration>3</Duration>
+        <RangeBegin>0</RangeBegin>
+        <RangeEnd>359</RangeEnd>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Repeat" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="num:DegreeToRadian" />
+      </Expression>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="RotationY" Selector="it" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawModel.bonsai">
+        <TranslationX>-0.58518517</TranslationX>
+        <TranslationY>0</TranslationY>
+        <TranslationZ>0.362962961</TranslationZ>
+        <RotationZ>0</RotationZ>
+        <RotationY>225.372223</RotationY>
+        <RotationX>0</RotationX>
+        <ScaleX>1</ScaleX>
+        <ScaleY>1</ScaleY>
+        <ScaleZ>1</ScaleZ>
+        <Ambient>
+          <X>0</X>
+          <Y>0</Y>
+          <Z>1</Z>
+        </Ambient>
+        <Diffuse>
+          <X>0.8</X>
+          <Y>0.8</Y>
+          <Z>0.8</Z>
+        </Diffuse>
+        <Specular>
+          <X>0.8</X>
+          <Y>0.8</Y>
+          <Z>0.8</Z>
+        </Specular>
+        <SpecularExponent>10</SpecularExponent>
+        <MeshName>icosphere</MeshName>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawModel.bonsai">
+        <TranslationX>-0.58518517</TranslationX>
+        <TranslationY>0</TranslationY>
+        <TranslationZ>0.362962961</TranslationZ>
+        <RotationZ>0</RotationZ>
+        <RotationY>0</RotationY>
+        <RotationX>0</RotationX>
+        <ScaleX>1</ScaleX>
+        <ScaleY>1</ScaleY>
+        <ScaleZ>1</ScaleZ>
+        <Ambient>
+          <X>0</X>
+          <Y>1</Y>
+          <Z>0</Z>
+        </Ambient>
+        <Diffuse>
+          <X>0.8</X>
+          <Y>0.8</Y>
+          <Z>0.8</Z>
+        </Diffuse>
+        <Specular>
+          <X>0.8</X>
+          <Y>0.8</Y>
+          <Z>0.8</Z>
+        </Specular>
+        <SpecularExponent>10</SpecularExponent>
+        <MeshName>cone</MeshName>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawModel.bonsai">
+        <TranslationX>1</TranslationX>
+        <TranslationY>0</TranslationY>
+        <TranslationZ>-1</TranslationZ>
+        <RotationZ>0</RotationZ>
+        <RotationY>0</RotationY>
+        <RotationX>0</RotationX>
+        <ScaleX>1</ScaleX>
+        <ScaleY>1</ScaleY>
+        <ScaleZ>1</ScaleZ>
+        <Ambient>
+          <X>1</X>
+          <Y>0</Y>
+          <Z>0</Z>
+        </Ambient>
+        <Diffuse>
+          <X>0.8</X>
+          <Y>0.8</Y>
+          <Z>0.8</Z>
+        </Diffuse>
+        <Specular>
+          <X>0.8</X>
+          <Y>0.8</Y>
+          <Z>0.8</Z>
+        </Specular>
+        <SpecularExponent>10</SpecularExponent>
+        <MeshName>cube</MeshName>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:CameraCapture">
+          <cv:Index>0</cv:Index>
+          <cv:CaptureProperties />
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:ConvertColor">
+          <cv:Conversion>Bgr2Hsv</cv:Conversion>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:HsvThreshold">
+          <cv:Lower>
+            <cv:Val0>0</cv:Val0>
+            <cv:Val1>140</cv:Val1>
+            <cv:Val2>110</cv:Val2>
+            <cv:Val3>0</cv:Val3>
+          </cv:Lower>
+          <cv:Upper>
+            <cv:Val0>40</cv:Val0>
+            <cv:Val1>260</cv:Val1>
+            <cv:Val2>190</cv:Val2>
+            <cv:Val3>0</cv:Val3>
+          </cv:Upper>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:FindContours">
+          <cv:Mode>External</cv:Mode>
+          <cv:Method>ChainApproxNone</cv:Method>
+          <cv:Offset>
+            <cv:X>0</cv:X>
+            <cv:Y>0</cv:Y>
+          </cv:Offset>
+          <cv:MinArea xsi:nil="true" />
+          <cv:MaxArea xsi:nil="true" />
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:SortBinaryRegions" />
+      </Expression>
+      <Expression xsi:type="rx:Condition">
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Count</Selector>
+            </Expression>
+            <Expression xsi:type="GreaterThan">
+              <Operand xsi:type="IntProperty">
+                <Value>1</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="ipy:PythonTransform">
+        <ipy:Name>Distance</ipy:Name>
+        <ipy:Script>from math import sqrt
+
+@returns(float)
+def process(value):
+  d = value[0].Centroid - value[1].Centroid
+  return sqrt(d.X * d.X + d.Y * d.Y)</ipy:Script>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="dsp:Rescale">
+          <dsp:Min>70</dsp:Min>
+          <dsp:Max>180</dsp:Max>
+          <dsp:RangeMin>4</dsp:RangeMin>
+          <dsp:RangeMax>1</dsp:RangeMax>
+          <dsp:RescaleType>Linear</dsp:RescaleType>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="ipy:PythonTransform">
+        <ipy:Name>Lateral</ipy:Name>
+        <ipy:Script>from math import sqrt
+
+@returns(float)
+def process(value):
+  return abs(value[0].Centroid.X + value[1].Centroid.X) / 2</ipy:Script>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="dsp:Rescale">
+          <dsp:Min>0</dsp:Min>
+          <dsp:Max>640</dsp:Max>
+          <dsp:RangeMin>2</dsp:RangeMin>
+          <dsp:RangeMax>-2</dsp:RangeMax>
+          <dsp:RescaleType>Linear</dsp:RescaleType>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="ipy:PythonTransform">
+        <ipy:Name>Vertical</ipy:Name>
+        <ipy:Script>from math import sqrt
+
+@returns(float)
+def process(value):
+  return 480 - abs(value[0].Centroid.Y + value[1].Centroid.Y) / 2</ipy:Script>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="dsp:Rescale">
+          <dsp:Min>0</dsp:Min>
+          <dsp:Max>480</dsp:Max>
+          <dsp:RangeMin>-4</dsp:RangeMin>
+          <dsp:RangeMax>4</dsp:RangeMax>
+          <dsp:RescaleType>Linear</dsp:RescaleType>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:CombineLatest" />
+      </Expression>
+      <Expression xsi:type="scr:ExpressionTransform">
+        <scr:Expression>new (
+  it.Item1 as Distance,
+  it.Item2 as Lateral,
+  it.Item3 as Vertical
+)</scr:Expression>
+      </Expression>
+      <Expression xsi:type="rx:PublishSubject">
+        <Name>Tracking</Name>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="2" To="3" Label="Source1" />
+      <Edge From="3" To="4" Label="Source1" />
+      <Edge From="5" To="10" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="10" Label="Source2" />
+      <Edge From="10" To="11" Label="Source1" />
+      <Edge From="12" To="17" Label="Source1" />
+      <Edge From="12" To="18" Label="Source1" />
+      <Edge From="12" To="19" Label="Source1" />
+      <Edge From="13" To="14" Label="Source1" />
+      <Edge From="14" To="15" Label="Source1" />
+      <Edge From="15" To="16" Label="Source1" />
+      <Edge From="16" To="17" Label="Source2" />
+      <Edge From="20" To="21" Label="Source1" />
+      <Edge From="21" To="22" Label="Source1" />
+      <Edge From="22" To="23" Label="Source1" />
+      <Edge From="23" To="24" Label="Source1" />
+      <Edge From="24" To="25" Label="Source1" />
+      <Edge From="25" To="26" Label="Source1" />
+      <Edge From="26" To="27" Label="Source1" />
+      <Edge From="26" To="29" Label="Source1" />
+      <Edge From="26" To="31" Label="Source1" />
+      <Edge From="27" To="28" Label="Source1" />
+      <Edge From="28" To="33" Label="Source1" />
+      <Edge From="29" To="30" Label="Source1" />
+      <Edge From="30" To="33" Label="Source2" />
+      <Edge From="31" To="32" Label="Source1" />
+      <Edge From="32" To="33" Label="Source3" />
+      <Edge From="33" To="34" Label="Source1" />
+      <Edge From="34" To="35" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
